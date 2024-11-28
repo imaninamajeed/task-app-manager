@@ -1,7 +1,11 @@
 import Link from 'next/link';
 import { tasks } from '../../data';
 
-export default function TaskDetailPage({ params }: { params: { id: string } }) {
+interface TaskDetailPageProps {
+    params: { id: string };
+}
+
+export default function TaskDetailPage({ params }: TaskDetailPageProps) {
     const task = tasks.find((task) => task.id === parseInt(params.id));
 
     if (!task) {
@@ -31,6 +35,6 @@ export default function TaskDetailPage({ params }: { params: { id: string } }) {
                     </div>
                 </div>
             </div>
-        </ div>
+        </div>
     );
 }
