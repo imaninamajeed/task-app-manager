@@ -1,4 +1,3 @@
-import { GetServerSideProps } from 'next';
 import Link from 'next/link';
 import { tasks } from '../../data';
 
@@ -6,24 +5,12 @@ interface TaskDetailPageProps {
   params: {
     id: string;
   };
+  task: typeof tasks[0] | null;
 }
 
-export const getServerSideProps: GetServerSideProps = async (context) => {
-  const { id } = context.params as { id: string }; // Make sure to type cast the `params`
-
-  // You can also check if the task exists here if needed
-  const task = tasks.find((task) => task.id === parseInt(id, 10));
-
-  return {
-    props: {
-      params: { id },
-      task: task || null, // Pass the task data if available, or null if not
-    },
-  };
-};
-
-export default function TaskDetailPage({ params, task }: TaskDetailPageProps & { task: typeof tasks[0] | null }) {
-  const taskId = parseInt(params.id, 10);
+export default async function TaskDetailPage({ params }: TaskDetailPageProps) {
+  const { id } = params;
+  const task = tasks.find((task) => task.id === parseInt(id, 10)) || null;
 
   if (!task) {
     return (
@@ -52,16 +39,4 @@ export default function TaskDetailPage({ params, task }: TaskDetailPageProps & {
       </div>
     </div>
   );
-}
-
-
-// Function to add a task
-export function addTask(title: string, description: string) {
-  const newTask = {
-    id: tasks.length + 1, // Generate a simple incremental ID
-    title,
-    description,
-  };
-  tasks.push(newTask);
-  return newTask;
 }
