@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter, useParams } from 'next/navigation';
 import { tasks } from '../../data';
 
@@ -10,18 +10,25 @@ export default function EditTaskPage() {
     const taskId = id ? parseInt(id as string) : null;
     const task = tasks.find((task) => task.id === taskId);
 
+    const [title, setTitle] = useState<string | null>(null);
+    const [description, setDescription] = useState<string | null>(null);
+    const [error, setError] = useState('');
+
+    useEffect(() => {
+        if (task) {
+            setTitle(task.title);
+            setDescription(task.description);
+        }
+    }, [task]);
+
     if (!task) {
         return <p className="text-center text-red-600">Task not found</p>;
     }
 
-    const [title, setTitle] = useState(task.title);
-    const [description, setDescription] = useState(task.description);
-    const [error, setError] = useState('');
-
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
 
-        if (!title.trim() || !description.trim()) {
+        if (!title?.trim() || !description?.trim()) {
             setError('Both title and description are required.');
             return;
         }
@@ -52,7 +59,7 @@ export default function EditTaskPage() {
                             <input
                                 id="title"
                                 type="text"
-                                value={title}
+                                value={title || ''}
                                 onChange={(e) => setTitle(e.target.value)}
                                 className="w-full px-4 py-3 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500 transition duration-150"
                                 placeholder="Enter task title"
@@ -64,7 +71,7 @@ export default function EditTaskPage() {
                             </label>
                             <textarea
                                 id="description"
-                                value={description}
+                                value={description || ''}
                                 onChange={(e) => setDescription(e.target.value)}
                                 className="w-full px-4 py-3 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500 transition duration-150"
                                 placeholder="Enter task description"
