@@ -7,7 +7,7 @@ import {
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import clsx from "clsx";
-import { Home, List, Rocket } from "@mui/icons-material";
+import { Home, List } from "@mui/icons-material";
 
 // Map of links to display in the navigation bar.
 const links = [
