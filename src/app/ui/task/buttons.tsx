@@ -29,10 +29,7 @@ export function UpdateTask({ id }: { id: string }) {
 }
 
 export function DeleteTask({ id }: { id: string }) {
-    async function deleteTaskWithId(formData: FormData) {
-        "use server";
-        await deleteTask(id);
-    }
+    const deleteTaskWithId = deleteTask.bind(null, id);
     return (
         <form action={deleteTaskWithId}>
             <button className="rounded-md border p-2 hover:bg-gray-100">
