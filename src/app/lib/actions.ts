@@ -1,10 +1,6 @@
 "use server";
-// import { z } from "zod";
 import { sql } from "@vercel/postgres";
-// import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
-// import { signIn } from "next-auth/react";
-// import { AuthError } from "next-auth";
 
 export async function deleteTask(id: string) {
     try {
@@ -15,4 +11,3 @@ export async function deleteTask(id: string) {
         return { message: "Database Error: Failed to Delete Task." };
     }
 }
-
