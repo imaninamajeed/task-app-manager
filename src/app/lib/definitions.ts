@@ -4,5 +4,5 @@ export type Task = {
     description: string;
     priority: "High" | "Medium" | "Low";
     duedate: string;
-    completed: "Completed" | "Pending";
+    completed: boolean;
 }
