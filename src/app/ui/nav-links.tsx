@@ -14,7 +14,6 @@ const links = [
     { name: "Home", href: "/", icon: Home },
     { name: "Task List", href: "/task/list", icon: List },
     { name: "Add Task", href: "/task/create", icon: PlusIcon },
-    { name: "POC", href: "/proof-of-concept", icon: Rocket },
 ];
 
 export default function NavLinks() {
