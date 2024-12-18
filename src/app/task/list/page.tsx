@@ -11,15 +11,13 @@ export const metadata: Metadata = {
     title: "Tasks",
 };
 
-export default async function TaskListPage({
-    searchParams,
-}: {
-    searchParams?: {
+export default async function TaskListPage(props: {
+    searchParams?: Promise<{
         query?: string;
         page?: string;
-    };
+    }>;
 }) {
-
+    const searchParams = await props.searchParams;
     const query = searchParams?.query || "";
     const currentPage = Number(searchParams?.page) || 1;
 
