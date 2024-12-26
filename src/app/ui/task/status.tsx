@@ -21,7 +21,7 @@ export default function TaskStatus({ status }: { status: boolean }) {
             ) : null}
             {status === true ? (
                 <>
-                    Completed
+                    Status
                     <CheckIcon className="ml-1 w-4 text-white" />
                 </>
             ) : null}

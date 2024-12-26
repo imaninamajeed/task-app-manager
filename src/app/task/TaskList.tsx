@@ -5,7 +5,10 @@ import { Task } from '../../types/task';
 import TaskCard from './TaskCard';
 import TaskForm from './TaskForm';
 
-const TaskList: React.FC = () => {
+import { fetchTasks } from '../lib/data';
+
+const TaskList: React.FC = async () => {
+    const fetchTask = await fetchTasks();
     const [tasks, setTasks] = useState<Task[]>([]);
 
     const addTask = (task: Task) => {
@@ -18,7 +21,7 @@ const TaskList: React.FC = () => {
 
     const toggleComplete = (id: string) => {
         setTasks((prevTasks) => prevTasks.map(task =>
-            task.id === id ? { ...task, completed: !task.completed } : task
+            task.id === id ? { ...task, status: !task.status } : task
         ));
     };
 

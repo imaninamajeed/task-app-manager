@@ -12,7 +12,7 @@ const TaskForm: React.FC<TaskFormProps> = ({ onAddTask, existingTask }) => {
     const [name, setName] = useState(existingTask?.name || '');
     const [description, setDescription] = useState(existingTask?.description || '');
     const [priority, setPriority] = useState<'High' | 'Medium' | 'Low'>(existingTask?.priority || 'Medium');
-    const [dueDate, setDueDate] = useState(existingTask?.dueDate || '');
+    const [date, setdate] = useState(existingTask?.date || '');
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
@@ -21,14 +21,14 @@ const TaskForm: React.FC<TaskFormProps> = ({ onAddTask, existingTask }) => {
             name,
             description,
             priority,
-            dueDate,
-            completed: false,
+            date,
+            status: false,
         };
         onAddTask(newTask);
         setName('');
         setDescription('');
         setPriority('Medium');
-        setDueDate('');
+        setdate('');
     };
 
     return (
@@ -59,8 +59,8 @@ const TaskForm: React.FC<TaskFormProps> = ({ onAddTask, existingTask }) => {
             </select>
             <input
                 type="date"
-                value={dueDate}
-                onChange={(e) => setDueDate(e.target.value)}
+                value={date}
+                onChange={(e) => setdate(e.target.value)}
                 className="w-full px-4 py-2 border border-gray-300 rounded-md"
             />
             <button

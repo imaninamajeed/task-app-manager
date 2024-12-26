@@ -1,17 +1,6 @@
 import { sql } from '@vercel/postgres';
 import { Task } from './definitions';
 
-export async function fetchTasks() {
-  try {
-    const data = await sql<Task>`SELECT * FROM tasks`;
-
-    return data.rows;
-  } catch (error) {
-    console.error('Database Error:', error);
-    throw new Error('Failed to fetch tasks.');
-  }
-}
-
 const ITEMS_PER_PAGE = 6;
 export async function fetchTaskPages() {
   try {
@@ -22,6 +11,27 @@ export async function fetchTaskPages() {
   } catch (error) {
     console.error('Database Error:', error);
     throw new Error('Failed to fetch total number of tasks.');
+  }
+}
+
+export async function fetchTaskById(id: string) {
+  try {
+    const data = await sql<Task>`SELECT * FROM tasks WHERE id = ${id}`;
+    return data.rows[0];
+  } catch (error) {
+    console.error('Database Error:', error);
+    throw new Error('Failed to fetch task.');
+  }
+}
+
+export async function fetchTasks() {
+  try {
+    const data = await sql<Task>`SELECT * FROM tasks`;
+
+    return data.rows;
+  } catch (error) {
+    console.error('Database Error:', error);
+    throw new Error('Failed to fetch tasks.');
   }
 }
 
@@ -38,9 +48,9 @@ export async function fetchFilteredTasks(
         title ILIKE ${`%${query}%`} OR
         description ILIKE ${`%${query}%`} OR
         priority ILIKE ${`%${query}%`} OR
-        duedate::text ILIKE ${`%${query}%`} OR
-        completed::text ILIKE ${`%${query}%`}
-      ORDER BY duedate DESC
+        date::text ILIKE ${`%${query}%`} OR
+        status::text ILIKE ${`%${query}%`}
+      ORDER BY date DESC
       LIMIT ${ITEMS_PER_PAGE} OFFSET ${offset}
     `;
     return tasks.rows;
