@@ -17,6 +17,30 @@ export default function Form({ tasks }: { tasks: TaskField[] }) {
     return (
         <form action={formAction}>
             <div className="rounded-md bg-gray-50 p-4 md:p-6">
+
+                {/* Task ID */}
+                <div className="mb-4">
+                    <label htmlFor="taskId" className="mb-2 block text-sm font-medium">
+                        Task ID
+                    </label>
+                    <input
+                        id="taskId"
+                        name="taskId"
+                        type="text"
+                        value={tasks.length ? (parseInt(tasks[tasks.length - 1].id) + 1).toString() : "1"}
+                        readOnly
+                        className="peer block w-full rounded-md border border-gray-200 py-2 pl-3 text-sm outline-2 placeholder:text-gray-500 bg-gray-100 cursor-not-allowed"
+                    />
+                    <div id="taskId-error" aria-live="polite" aria-atomic="true">
+                        {state.errors?.taskId &&
+                            state.errors.taskId.map((error: string) => (
+                                <p className="mt-2 text-sm text-red-500" key={error}>
+                                    {error}
+                                </p>
+                            ))}
+                    </div>
+                </div>
+
                 {/* Task Title */}
                 <div className="mb-4">
                     <label htmlFor="title" className="mb-2 block text-sm font-medium">
@@ -76,7 +100,7 @@ export default function Form({ tasks }: { tasks: TaskField[] }) {
                             defaultValue=""
                         >
                             <option value="" disabled>
-                            Select task priority
+                                Select task priority
                             </option>
                             <option value="High">High</option>
                             <option value="Medium">Medium</option>
@@ -88,7 +112,7 @@ export default function Form({ tasks }: { tasks: TaskField[] }) {
                         {state.errors?.priority &&
                             state.errors.priority.map((error: string) => (
                                 <p className="mt-2 text-sm text-red-500" key={error}>
-                                    {error}
+                                    priority error  {error}
                                 </p>
                             ))}
                     </div>
@@ -106,7 +130,7 @@ export default function Form({ tasks }: { tasks: TaskField[] }) {
                                     id="pending"
                                     name="status"
                                     type="radio"
-                                    value="false"
+                                    value="Pending"
                                     className="h-4 w-4 cursor-pointer border-gray-300 bg-gray-100 focus:ring-2"
                                 />
                                 <label
@@ -121,7 +145,7 @@ export default function Form({ tasks }: { tasks: TaskField[] }) {
                                     id="completed"
                                     name="status"
                                     type="radio"
-                                    value="true"
+                                    value="Completed"
                                     className="h-4 w-4 cursor-pointer border-gray-300 bg-gray-100 text-gray-600 focus:ring-2"
                                 />
                                 <label
@@ -137,7 +161,7 @@ export default function Form({ tasks }: { tasks: TaskField[] }) {
                         {state.errors?.status &&
                             state.errors.status.map((error: string) => (
                                 <p className="mt-2 text-sm text-red-500" key={error}>
-                                    {error}
+                                    status{error}
                                 </p>
                             ))}
                     </div>

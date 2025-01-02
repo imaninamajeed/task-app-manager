@@ -4,5 +4,5 @@ export interface Task {
     description: string;
     priority: "High" | "Medium" | "Low";
     date: string;
-    status: boolean;
+    status: "Pending" | "Completed";
 }

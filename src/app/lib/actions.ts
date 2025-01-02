@@ -20,7 +20,9 @@ const FormSchema = z.object({
         invalid_type_error: 'Please select a priority.',
     }),
     date: z.string(),
-    status: z.boolean(),
+    status: z.enum(['Pending', 'Completed'], {
+        invalid_type_error: 'Please select a status.',
+    }),
 });
 
 const CreateTask = FormSchema.omit({ id: true, date: true });
@@ -61,14 +63,20 @@ export async function createTask(prevState: State, formData: FormData) {
 
     // Insert data into the database
     try {
+        // Fetch the maximum current ID and increment it
+        const result = await sql`SELECT COALESCE(MAX(id), 0) + 1 AS next_id FROM tasks`;
+        const nextId: number = result.rows[0].next_id;
+        const nextTaskId = 't' + nextId.toString().padStart(3, '0');
+
         await sql`
-            INSERT INTO tasks (task_id, title, description, priority, date, status)
-            VALUES ( ${taskId},  ${title}, ${description}, ${priority}, ${date}, ${status})
+            INSERT INTO tasks (id, task_id, title, description, priority, date, status)
+            VALUES (${nextId}, ${nextTaskId}, ${title}, ${description}, ${priority}, ${date}, ${status})
         `;
     }
     catch (error) {
         return {
-            message: 'Database Error: Failed to Create Task.',
+            message: error + 'Database Error: Failed to Create Task.',
+            error,
         };
     }
 

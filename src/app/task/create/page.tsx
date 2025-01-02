@@ -22,7 +22,7 @@ export default async function Page() {
                     },
                 ]}
             />
-            <Form tasks={tasks} />
+            <Form tasks = {tasks} />
         </main>
     );
 }

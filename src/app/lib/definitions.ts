@@ -4,7 +4,7 @@ export type Task = {
     description: string;
     priority: "High" | "Medium" | "Low";
     date: string;
-    status: boolean;
+    status: "Pending" | "Completed";
 }
 
 export type TasksTable = {
@@ -13,7 +13,7 @@ export type TasksTable = {
     description: string;
     priority: "High" | "Medium" | "Low";
     date: string;
-    status: boolean;
+    status: "Pending" | "Completed";
 }
 
 export type TaskField = {
@@ -22,7 +22,7 @@ export type TaskField = {
     description: string;
     priority: "High" | "Medium" | "Low";
     date: string;
-    status: boolean;
+    status: "Pending" | "Completed";
 };
 
 
@@ -32,5 +32,5 @@ export type TaskForm = {
     description: string;
     priority: "High" | "Medium" | "Low";
     date: string;
-    status: boolean;
+    status: "Pending" | "Completed";
 }
